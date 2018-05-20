@@ -6,10 +6,10 @@ import javax.persistence.*
 @Entity
 @Table(name = "bank_account")
 data class BankAccount(
-        @Id @GeneratedValue
-        private val id: Long,
-        val openDate: Date,
+        @Id @GeneratedValue(strategy = GenerationType.AUTO)
+        private var id: Long = 0,
+        val openDate: Date = Date(),
         @ManyToOne
-        val user: User,
-        var balance: Double
+        val user: User = User(),
+        var balance: Double = 0.0
 )
