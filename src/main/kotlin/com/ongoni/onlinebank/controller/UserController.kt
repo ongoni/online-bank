@@ -15,9 +15,14 @@ class UserController {
     @Autowired
     private lateinit var userService: UserService
 
-    @GetMapping("/transactions/{user}")
-    fun getTransactions(@PathVariable user: User, model: Model): String {
-        model.addAttribute("transactions", userService.findTransactionsBy(user))
+    @GetMapping("/transactions/{id}")
+    fun getTransactions(@PathVariable id: Long, model: Model): String {
+        val user = userService.findById(id).orElse(null)
+
+        if (user != null) {
+            model.addAttribute("transactions", userService.findTransactionsBy(user))
+        }
+
         return "transactions"
     }
 

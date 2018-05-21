@@ -24,13 +24,14 @@ class SignupController {
     fun registerUser(user: User, bindingResult: BindingResult, model: Model) : String {
 //        if (userRepository.findByLogin(user.login) != null) {
 //            model.addAttribute("message", "user already exists!")
+//            return "redirect:/signup?error"
 //        }
 
         user.active = true
         user.roles.add(Role.USER)
         userRepository.save(user)
 
-        return "redirect:/login"
+        return "redirect:/home"
     }
 
 }
