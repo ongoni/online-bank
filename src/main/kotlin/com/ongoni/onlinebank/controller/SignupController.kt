@@ -16,12 +16,12 @@ class SignupController {
     private lateinit var userRepository: UserRepository
 
     @GetMapping("/signup")
-    fun signUp() : String {
+    fun signUp(): String {
         return "signup"
     }
 
     @PostMapping("/signup")
-    fun registerUser(user: User, bindingResult: BindingResult, model: Model) : String {
+    fun registerUser(user: User, bindingResult: BindingResult, model: Model): String {
 //        if (userRepository.findByLogin(user.login) != null) {
 //            model.addAttribute("message", "user already exists!")
 //            return "redirect:/signup?error"
@@ -31,7 +31,7 @@ class SignupController {
         user.roles.add(Role.USER)
         userRepository.save(user)
 
-        return "redirect:/home"
+        return "redirect:/login"
     }
 
 }

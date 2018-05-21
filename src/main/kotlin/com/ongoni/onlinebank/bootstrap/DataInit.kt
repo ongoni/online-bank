@@ -27,6 +27,7 @@ class DataInit : ApplicationListener<ContextRefreshedEvent> {
     }
 
     fun init() {
+        val ongoni = User(login = "ongoni", password = "qwe", firstName = "Alex", active = true, roles = mutableSetOf(Role.USER, Role.ADMIN))
         val leeroy = User(login = "leroy", password = "jenkins22", firstName = "Leeroy", lastName = "Jenkins", active = true, roles = mutableSetOf(Role.USER))
         val jaraxxus = User(login = "satan", password = "legion4eva", firstName = "Jaraxxus", lastName = "Eredar Lord", active = true, roles = mutableSetOf(Role.USER))
         val leeroyAcc = BankAccount(openDate = Date(), user = leeroy)
@@ -34,6 +35,7 @@ class DataInit : ApplicationListener<ContextRefreshedEvent> {
         val transaction1 = Transaction(from = leeroyAcc, to = jaraxxusAcc, amount = 1000.0, date = Date(), isRolledBack = false)
         val transaction2 = Transaction(from = jaraxxusAcc, to = leeroyAcc, amount = 1000.0, date = Date(), isRolledBack = false)
 
+        userRepository.saveAndFlush(ongoni)
         userRepository.saveAndFlush(leeroy)
         userRepository.saveAndFlush(jaraxxus)
         bankAccountRepository.saveAndFlush(leeroyAcc)
