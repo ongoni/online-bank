@@ -8,6 +8,7 @@ import com.ongoni.onlinebank.repository.TransactionRepository
 import com.ongoni.onlinebank.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UserService {
@@ -19,8 +20,12 @@ class UserService {
     private lateinit var bankAccountRepository: BankAccountRepository
 
     fun findTransactionsBy(user: User): List<Transaction> {
-        return transactionRepository.findByFrom(user)
-                .plus(transactionRepository.findByTo(user))
+        val userAccounts = bankAccountRepository.findByUser(user)
+        return transactionRepository
+                .findAllByFrom(userAccounts)
+                .plus(transactionRepository
+                        .findAllByTo(userAccounts)
+                )
     }
 
     fun findBankAccountsBy(user: User): List<BankAccount> {
@@ -29,5 +34,9 @@ class UserService {
 
     fun findAll(): MutableList<User> {
         return userRepository.findAll()
+    }
+
+    fun findById(id: Long): Optional<User> {
+        return userRepository.findById(id)
     }
 }
