@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <title>Transactions</title>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>from</th>
+      <th>to</th>
+      <th>amount</th>
+      <th>date</th>
+      <th>rolled back</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="transaction : ${transactions}">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

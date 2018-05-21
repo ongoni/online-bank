@@ -3,8 +3,8 @@ package com.ongoni.onlinebank.repository
 import com.ongoni.onlinebank.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserRepository : JpaRepository<User, Int> {
+interface UserRepository : JpaRepository<User, Long> {
 
-    fun findByLogin(login: String): User
+    fun findOneByLogin(login: String): User
 
 }
