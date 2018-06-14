@@ -27,20 +27,24 @@ class DataInit : ApplicationListener<ContextRefreshedEvent> {
     }
 
     fun init() {
-        val ongoni = User(login = "ongoni", password = "qwe", firstName = "Alex", active = true, roles = mutableSetOf(Role.USER, Role.ADMIN))
-        val leeroy = User(login = "leroy", password = "jenkins22", firstName = "Leeroy", lastName = "Jenkins", active = true, roles = mutableSetOf(Role.USER))
-        val jaraxxus = User(login = "satan", password = "legion4eva", firstName = "Jaraxxus", lastName = "Eredar Lord", active = true, roles = mutableSetOf(Role.USER))
-        val leeroyAcc = BankAccount(openDate = Date(), user = leeroy)
-        val jaraxxusAcc = BankAccount(openDate = Date(), user = jaraxxus)
-        val transaction1 = Transaction(from = leeroyAcc, to = jaraxxusAcc, amount = 1000.0, date = Date(), isRolledBack = false)
-        val transaction2 = Transaction(from = jaraxxusAcc, to = leeroyAcc, amount = 1000.0, date = Date(), isRolledBack = false)
+        val ongoni = User(login = "ongoni", password = "qwe", firstName = "Alex", roles = mutableSetOf(Role.USER, Role.ADMIN))
+        val leeroy = User(login = "leroy", password = "jenkins22", firstName = "Leeroy", lastName = "Jenkins", roles = mutableSetOf(Role.USER))
+        val jaraxxus = User(login = "satan", password = "legion4eva", firstName = "Jaraxxus", lastName = "Eredar Lord", roles = mutableSetOf(Role.USER))
+        val leeroyAcc = BankAccount(user = leeroy, balance = 1000.0)
+        val jaraxxusAcc = BankAccount(user = jaraxxus, balance = 1000.0)
+        val ongoniAcc = BankAccount(user = ongoni, balance = 1000.0)
+        val transaction1 = Transaction(from = leeroyAcc, to = jaraxxusAcc, amount = 1000.0)
+        val transaction2 = Transaction(from = jaraxxusAcc, to = leeroyAcc, amount = 1000.0)
+        val transaction3 = Transaction(from = ongoniAcc, to = leeroyAcc, amount = 1000.0, isRolledBack = true)
 
         userRepository.saveAndFlush(ongoni)
         userRepository.saveAndFlush(leeroy)
         userRepository.saveAndFlush(jaraxxus)
         bankAccountRepository.saveAndFlush(leeroyAcc)
         bankAccountRepository.saveAndFlush(jaraxxusAcc)
+        bankAccountRepository.saveAndFlush(ongoniAcc)
         transactionRepository.saveAndFlush(transaction1)
         transactionRepository.saveAndFlush(transaction2)
+        transactionRepository.saveAndFlush(transaction3)
     }
 }
