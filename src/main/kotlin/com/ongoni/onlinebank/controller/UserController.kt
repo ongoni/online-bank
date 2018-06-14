@@ -1,12 +1,13 @@
 package com.ongoni.onlinebank.controller
 
-import com.ongoni.onlinebank.entity.User
+import com.ongoni.onlinebank.service.BankAccountService
+import com.ongoni.onlinebank.service.TransactionService
 import com.ongoni.onlinebank.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
@@ -14,39 +15,59 @@ import org.springframework.web.bind.annotation.RequestMapping
 class UserController {
     @Autowired
     private lateinit var userService: UserService
+    @Autowired
+    private lateinit var transactionService: TransactionService
+    @Autowired
+    private lateinit var bankAccountService: BankAccountService
 
-    @GetMapping("/transactions/{id}")
-    fun getTransactions(@PathVariable id: Long, model: Model): String {
-        val user = userService.findById(id).orElse(null)
+    @GetMapping("/transactions")
+    fun getTransactions(model: Model): String {
+        val auth = SecurityContextHolder.getContext().authentication
+        val user = userService.findByLogin(auth.name)
 
-        if (user != null) {
-            model.addAttribute("transactions", userService.findTransactionsBy(user))
-        }
+        model.addAttribute("transactions", transactionService.findTransactionsBy(user))
 
         return "transactions"
     }
 
-    @GetMapping("/accounts/{user}")
-    fun getAccounts(@PathVariable user: User, model: Model): String {
-        model.addAttribute("accounts", userService.findBankAccountsBy(user))
+    @GetMapping("/accounts")
+    fun getAccounts(model: Model): String {
+        val auth = SecurityContextHolder.getContext().authentication
+        val user = userService.findByLogin(auth.name)
+
+        model.addAttribute("accounts", bankAccountService.findBankAccountsBy(user))
+
         return "accounts"
     }
 
-    @GetMapping("/details/{user}")
-    fun getDetails(@PathVariable user: User, model: Model): String {
+    @GetMapping("/details")
+    fun getDetails(model: Model): String {
+        val auth = SecurityContextHolder.getContext().authentication
+        val user = userService.findByLogin(auth.name)
+
         model.addAttribute("user", user)
+
         return "userDetails"
     }
 
-    @GetMapping("/edit/{user}")
-    fun editDetails(@PathVariable user: User, model: Model): String {
+    @GetMapping("/edit")
+    fun editDetails(model: Model): String {
+        val auth = SecurityContextHolder.getContext().authentication
+        val user = userService.findByLogin(auth.name)
+
         model.addAttribute("user", user)
+
         return "userEdit"
     }
 
     @GetMapping("/transaction")
-    fun makeTransaction(model: Model): String {
-        return "makeTransaction"
+    fun transaction(model: Model): String {
+        return "transaction"
+    }
+
+    @GetMapping("/transaction/new")
+    fun makeTransaction(model: Model) {
+
     }
 
 }

@@ -13,9 +13,4 @@ class MainController {
         return "home"
     }
 
-    @GetMapping("/hello")
-    fun hello() : String {
-        return "hello"
-    }
-
 }

@@ -23,7 +23,7 @@ class SignupController {
     @PostMapping("/signup")
     fun registerUser(user: User, bindingResult: BindingResult, model: Model): String {
 //        if (userRepository.findByLogin(user.login) != null) {
-//            model.addAttribute("message", "user already exists!")
+//            entity.addAttribute("message", "user already exists!")
 //            return "redirect:/signup?error"
 //        }
 
