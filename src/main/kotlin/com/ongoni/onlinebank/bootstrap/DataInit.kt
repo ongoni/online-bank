@@ -27,7 +27,7 @@ class DataInit : ApplicationListener<ContextRefreshedEvent> {
     }
 
     fun init() {
-        val ongoni = User(login = "ongoni", password = "qwe", firstName = "Alex", roles = mutableSetOf(Role.USER, Role.ADMIN))
+        val ongoni = User(login = "ongoni", password = "qwe", firstName = "Alex", roles = mutableSetOf(Role.ADMIN, Role.USER))
         val leeroy = User(login = "leroy", password = "jenkins22", firstName = "Leeroy", lastName = "Jenkins", roles = mutableSetOf(Role.USER))
         val jaraxxus = User(login = "satan", password = "legion4eva", firstName = "Jaraxxus", lastName = "Eredar Lord", roles = mutableSetOf(Role.USER))
         val leeroyAcc = BankAccount(user = leeroy, balance = 1000.0)
