@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <title>Transactions</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+<div class="wrapper">
+  <div th:insert="~{fragments/menus :: topbar}"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div th:replace="~{fragments/admin :: sidebar}"></div>
+      <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <table class="table mt-3">
+          <thead>
+          <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Rollback</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!--/*@thymesVar id="transaction" type="com.ongoni.onlinebank.entity.Transaction"*/-->
+          <tr th:each="transaction : ${transactions}">
+            <td th:text="${transaction.from.user.getFullName()}"></td>
+            <td th:text="${transaction.to.user.getFullName()}"></td>
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.date}"></td>
+            <td th:if="${transaction.rolledBack}">Rolled back</td>
+            <td th:unless="${transaction.rolledBack}">Done</td>
+            <td><td><a th:href="@{'/admin/rollback/' + ${transaction.id}}">rollback</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+</div>
+</body>
+</html>

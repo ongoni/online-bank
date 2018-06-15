@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+<div class="wrapper">
+  <div th:fragment="topbar" class="navbar navbar-expand navbar-dark navbar-fixed-top bg-dark">
+    <div class="navbar-brand">Online bank</div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/home}">Home</a>
+      </li>
+      <li th:if="!${#httpServletRequest.remoteUser}" class="nav-item">
+        <a class="nav-link" th:href="@{/login}">Sign in</a>
+      </li>
+      <li th:if="${#httpServletRequest.remoteUser}" class="nav-item">
+        <a class="nav-link" th:text="${#httpServletRequest.remoteUser}"></a>
+      </li>
+      <li th:if="${#httpServletRequest.remoteUser}" class="nav-item">
+        <a href="javascript: document.logoutForm.submit()" class="nav-link">Sign out</a>
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+          <input hidden type="submit" value="Sign Out"/>
+        </form>
+      </li>
+    </ul>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+        <nav th:fragment="sidebar" class="col-md-2 d-none bg-light d-md-block sidebar" style="min-height: 100vh">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
+                <a class="nav-link" th:href="@{/admin}">Admin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/accounts}">My bank accounts</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/transactions}">My transactions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/transaction}">New transaction</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/edit}">Edit my details</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+    </div>
+  </div>
+</div>
+</body>
+</html>
