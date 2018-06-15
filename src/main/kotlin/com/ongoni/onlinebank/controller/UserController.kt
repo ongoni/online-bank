@@ -6,6 +6,7 @@ import com.ongoni.onlinebank.service.BankAccountService
 import com.ongoni.onlinebank.service.TransactionService
 import com.ongoni.onlinebank.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping("/user")
+@PreAuthorize("hasAuthority('USER')")
 class UserController {
     @Autowired
     private lateinit var userService: UserService
