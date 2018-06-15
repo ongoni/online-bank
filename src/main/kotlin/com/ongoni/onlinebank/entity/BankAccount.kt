@@ -7,7 +7,7 @@ import javax.persistence.*
 @Table(name = "bank_account")
 data class BankAccount(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        private var id: Long = 0,
+        var id: Long = 0,
 
         val uuid: String = UUID.randomUUID().toString(),
 

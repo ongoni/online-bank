@@ -7,7 +7,7 @@ import javax.persistence.*
 @Table(name = "transaction")
 data class Transaction(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        private var id: Long = 0,
+        var id: Long = 0,
 
         @ManyToOne
         val from: BankAccount = BankAccount(),
