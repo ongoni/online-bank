@@ -17,19 +17,19 @@ class SignupController {
 
     @GetMapping("/signup")
     fun signUp(): String {
-        return "signup"
+        return "user/signup"
     }
 
     @PostMapping("/signup")
     fun registerUser(user: User, bindingResult: BindingResult, model: Model): String {
-//        if (userRepository.findByLogin(user.login) != null) {
-//            entity.addAttribute("message", "user already exists!")
-//            return "redirect:/signup?error"
-//        }
-
         user.active = true
         user.roles.add(Role.USER)
-        userRepository.save(user)
+
+        try {
+            userRepository.save(user)
+        } catch (ex: Exception) {
+            return "redirect:/signup?error"
+        }
 
         return "redirect:/login"
     }
