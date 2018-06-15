@@ -11,8 +11,16 @@ class UserService {
     @Autowired
     private lateinit var userRepository: UserRepository
 
+    fun delete(user: User) {
+        userRepository.delete(user)
+    }
+
+    fun save(user: User) {
+        userRepository.save(user)
+    }
+
     fun findAll(): List<User> {
-        return userRepository.findAll()
+        return userRepository.findAll().filter { x -> !x.deleted }
     }
 
     fun findById(id: Long): Optional<User> {

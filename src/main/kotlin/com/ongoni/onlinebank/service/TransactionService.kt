@@ -14,6 +14,10 @@ class TransactionService {
     @Autowired
     private lateinit var bankAccountRepository: BankAccountRepository
 
+    fun save(transaction: Transaction) {
+        transactionRepository.save(transaction)
+    }
+
     fun findAll(): List<Transaction> {
         return transactionRepository.findAll()
     }
